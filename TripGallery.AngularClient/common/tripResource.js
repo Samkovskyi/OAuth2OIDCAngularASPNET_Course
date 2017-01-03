@@ -4,20 +4,27 @@
     angular
         .module("common.services")
         .factory("tripResource",
-                ["$resource",
-                 "appSettings", 
-                    tripResource])
+        [
+            "$resource",
+            "appSettings",
+            "tokenContainer",
+            tripResource
+        ]);
 
-    function tripResource($resource, appSettings) {
+    function tripResource($resource, appSettings, tokenContainer) {
          return $resource(appSettings.tripGalleryAPI + "/api/trips/:tripId", null,
-            {
-                'patch':
-                    { 
-                        method: 'PATCH',
-                        transformRequest: createJsonPatchDocument 
-                    }
+         {
+             'query': {
+                 isArray: true,
+                 headers: { 'Authorization': 'Bearer ' + tokenContainer.getToken().token }
+             },
+             'patch':
+             {
+                 method: 'PATCH',
+                 transformRequest: createJsonPatchDocument
+             }
 
-            });
+         });
     };
 
     var createJsonPatchDocument = function (data) {
