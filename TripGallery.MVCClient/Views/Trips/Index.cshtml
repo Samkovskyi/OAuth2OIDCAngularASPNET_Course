@@ -15,7 +15,8 @@
         <div class="col-md-6 bottomMarginDefault">
 
             <div class="pull-left rightMarginDefault">
-                <img class="tripImage img-circle" src="@item.MainPictureUri" />
+                <img class="tripImage img-circle" src="@item.MainPictureUri"/>
+
 
                 @if (item.IsPublic)
                 {
@@ -32,6 +33,7 @@
                     </div>
                 }
 
+
             </div>
             <div>
                 <div class="h3">@item.Name</div>
@@ -39,24 +41,26 @@
 
                 <div>
 
-                    @if (item.IsPublic)
+                    @if (item.OwnerId == this.User.Identity.Name)
                     {
-                        @Html.ActionLink("Make private", "SwitchPrivacyLevel",
-                            new { id = item.Id, isPublic = item.IsPublic });
+                        if (item.IsPublic)
+                         {
+                             @Html.ActionLink("Make private", "SwitchPrivacyLevel",
+                                 new {id = item.Id, isPublic = item.IsPublic})
+                         }
+                         else
+                         {
+                             @Html.ActionLink("Make public", "SwitchPrivacyLevel",
+                                 new {id = item.Id, isPublic = item.IsPublic})
+                         }
                     }
-                    else
-                    {
-                        @Html.ActionLink("Make public", "SwitchPrivacyLevel",
-                            new { id = item.Id, isPublic = item.IsPublic });
-                    }
+                    @Html.Raw(" | ")
 
-                    @Html.Raw(" | ");
+                    @Html.ActionLink("Pictures", "Index", "Pictures", new {tripId = item.Id}, null)
 
-                    @Html.ActionLink("Pictures", "Index", "Pictures", new { tripId = item.Id }, null)
+                    @Html.Raw(" | ")
 
-                    @Html.Raw(" | ");
-
-                    @Html.ActionLink("Create album", "Album", "Trips", new { tripId = item.Id }, null)
+                    @Html.ActionLink("Create album", "Album", "Trips", new {tripId = item.Id}, null)
 
 
                 </div>

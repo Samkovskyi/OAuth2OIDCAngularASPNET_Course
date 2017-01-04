@@ -19,7 +19,9 @@ namespace TripCompany.IdentityServer.Config
                     DisplayName = "Gallaery Management",
                     Description = "Allow the app to manage galleries on your behalf",
                     Type = ScopeType.Resource
-                }
+                },
+                StandardScopes.OpenId,
+                StandardScopes.ProfileAlwaysInclude
             };
         }
     }

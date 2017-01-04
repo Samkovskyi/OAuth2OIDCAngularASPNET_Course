@@ -15,7 +15,7 @@ namespace TripGallery.MVCClient.Controllers
 
     public class PicturesController : Controller
     {
-
+        [Authorize]
         public async Task<ActionResult> Index(Guid tripId)
         {
             var httpClient = TripGalleryHttpClient.GetClient();

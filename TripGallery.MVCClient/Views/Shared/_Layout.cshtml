@@ -17,7 +17,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userName = (User.Identity as System.Security.Claims.ClaimsIdentity)?.FindFirst("given_name")?.Value ?? string.Empty;
+                            var sureName = (User.Identity as System.Security.Claims.ClaimsIdentity)?.FindFirst("family_name")?.Value ?? string.Empty;
+                            @Html.ActionLink(string.Format($"Logout ({userName} {sureName})"), "Logout", "UserAccount")
+                        }
                    </li>
                 </ul>
             </div>
